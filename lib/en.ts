@@ -1,7 +1,3 @@
-import { Description } from "@radix-ui/react-dialog";
-import { Subtitles } from "lucide-react";
-import { title } from "process";
-
 const en = {
     navbar:{
         name: 'AI Infotech',
