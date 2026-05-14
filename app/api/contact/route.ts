@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
         const toEmail = process.env.RESEND_TO_EMAIL ?? "surya.vf20@gmail.com";
         const subject2 = `A new enquiry has been received from ${fullName} (${email}) regarding ${topic}`;
-
+        console.log(`Attempting to send email to ${toEmail} with subject: ${subject2}`);
         const { error } = await resend.emails.send({
             from: "ai-infotech-enquiry@resend.dev",
             to: toEmail,
@@ -53,10 +53,11 @@ export async function POST(request: Request) {
         });
 
         if (error) {
+            console.error(`Error sending email via Resend to the sender ${toEmail} with error message: ${error.message}`);
             return NextResponse.json(
                 {
                     error: "Failed to send email. Please try again later.",
-                    errorDetails: error instanceof Error ? error.message : "Unknown error",
+                    errorDetails: error.message ?? "Unknown error from email service.",
                 },
                 { status: 500 }
             );
