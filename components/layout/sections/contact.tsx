@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Building2, Clock, Mail, Phone } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -27,35 +26,61 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { contactSchema, type ContactFormValues } from "@/lib/contact-schema";
 import en from "@/lib/en";
-
-const formSchema = z.object({
-  firstName: z.string().min(2).max(255),
-  lastName: z.string().min(2).max(255),
-  email: z.string().email(),
-  subject: z.string().min(2).max(255),
-  message: z.string(),
-});
+import { useState } from "react";
 
 export const ContactSection = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitError, setSubmitError] = useState("");
+
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      subject: "Web Development",
+      topic: "Web Development",
       message: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    const { firstName, lastName, email, subject, message } = values;
-    console.log(values);
+  async function onSubmit(values: ContactFormValues) {
+    // Reset UI feedback before each submission.
+    setSubmitStatus("idle");
+    setSubmitError("");
 
-    const mailToLink = `mailto:leomirandadev@gmail.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-    window.location.href = mailToLink;
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(result?.error ?? "Failed to send your message. Please try again.");
+      }
+
+      setSubmitStatus("success");
+      form.reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        topic: "Web Development",
+        message: "",
+      });
+    } catch (error) {
+      setSubmitStatus("error");
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to send your message. Please try again."
+      );
+    }
   }
 
   return (
@@ -175,24 +200,30 @@ export const ContactSection = () => {
                 <div className="flex flex-col gap-1.5">
                   <FormField
                     control={form.control}
-                    name="subject"
+                    name="topic"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Subject</FormLabel>
+                        <FormLabel>Topic</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a subject" />
+                              <SelectValue placeholder="Select a topic" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="Web Development">
                               Web Development
                             </SelectItem>
-                            <SelectItem value="Mobile Development">
+                            <SelectItem value="Topic 2">
+                              Topic 2
+                            </SelectItem>
+                            <SelectItem value="Topic 3">
+                              Topic 3
+                            </SelectItem>
+                            {/* <SelectItem value="Mobile Development">
                               Mobile Development
                             </SelectItem>
                             <SelectItem value="Figma Design">
@@ -201,7 +232,7 @@ export const ContactSection = () => {
                             <SelectItem value="REST API">REST API</SelectItem>
                             <SelectItem value="FullStack Project">
                               FullStack Project
-                            </SelectItem>
+                            </SelectItem> */}
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -232,7 +263,19 @@ export const ContactSection = () => {
                   />
                 </div>
 
-                <Button className="mt-4">Send message</Button>
+                <Button className="mt-4" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                </Button>
+
+                {submitStatus === "success" ? (
+                  <p className="text-sm text-green-600 dark:text-green-400">
+                    Thank you! Your message has been sent successfully.
+                  </p>
+                ) : null}
+
+                {submitStatus === "error" ? (
+                  <p className="text-sm text-red-600 dark:text-red-400">{submitError}</p>
+                ) : null}
               </form>
             </Form>
           </CardContent>

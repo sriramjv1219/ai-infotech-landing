@@ -34,3 +34,15 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Resend Contact Form Setup
+
+1. Copy env template:
+
+```bash
+cp .env.example .env.local
+```
+
+2. Open `.env.local` and replace `re_xxxxxxxxx` with your actual Resend API key.
+
+3. (Optional for local) Replace `RESEND_TO_EMAIL` to test the email workflow via Resend.
