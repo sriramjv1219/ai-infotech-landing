@@ -10,7 +10,7 @@ const en = {
     },
     hero: {
         part1: {
-            description: 'AI Infotech helps businesses modernize their technology landscape through Data Engineering, AI/ML Solutions, ETL Pipelines, Analytics, and Custom Product Development.',
+            description: 'Transforming complex technology challenges into scalable software and data-driven solutions that help businesses innovate faster, improve efficiency, and achieve sustainable growth.',
             scheduleButton: 'Schedule a consultation',
             exploreButton: 'Explore our services',
         },

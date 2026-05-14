@@ -5,6 +5,7 @@ import { FAQSection } from "@/components/layout/sections/faq";
 import { FeaturesSection } from "@/components/layout/sections/features";
 import { FooterSection } from "@/components/layout/sections/footer";
 import { HeroSection } from "@/components/layout/sections/hero";
+import HeroWithVideo from "@/components/layout/sections/heroWithVideo";
 import { IndustriesSection } from "@/components/layout/sections/industries";
 import { PricingSection } from "@/components/layout/sections/pricing";
 import { ServicesSection } from "@/components/layout/sections/services";
@@ -18,7 +19,7 @@ export const metadata = {
   description: "Experience the AI Infotech Advantage.",
   openGraph: {
     type: "website",
-    url: "https://github.com/nobruf/shadcn-landing-page.git",
+    // url: "https://github.com/nobruf/shadcn-landing-page.git",
     title: "AI Infotech",
     description: "Experience the AI Infotech Advantage.",
     // images: [
@@ -44,11 +45,12 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <HeroWithVideo />
       {/* <SponsorsSection /> */}
       {/* <BenefitsSection /> */}
 
-       <IndustriesSection />
+      <IndustriesSection />
       <FeaturesSection />
       <ServicesSection />
 

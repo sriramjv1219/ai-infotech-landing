@@ -10,58 +10,56 @@ interface FeaturesProps {
 
 const featureList: FeaturesProps[] = [
   {
-    icon: "TabletSmartphone",
-    title: "Mobile Friendly",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam, consectetur.",
-  },
-  {
     icon: "BadgeCheck",
-    title: "Social Proof",
+    title: "Modern Technology Expertise",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Natus consectetur, odio ea accusamus aperiam.",
-  },
-  {
-    icon: "Goal",
-    title: "Targeted Content",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. odio ea accusamus aperiam.",
+      "Our team works with modern cloud, AI, analytics, and product engineering ecosystems.",
   },
   {
     icon: "PictureInPicture",
-    title: "Strong Visuals",
+    title: "Scalable Architecture",
     description:
-      "Lorem elit. A odio velit cum aliquam. Natus consectetur dolores, odio ea accusamus aperiam.",
+      "Solutions designed to grow with your business and evolving customer needs.",
+  },
+  {
+    icon: "Goal",
+    title: "Agile & Transparent Delivery",
+    description:
+      "Fast iterations, continuous collaboration, and complete visibility throughout the project lifecycle.",
+  },
+  {
+    icon: "TabletSmartphone",
+    title: "Business-Focused Engineering",
+    description:
+      "We align technology solutions with measurable business outcomes.",
   },
   {
     icon: "MousePointerClick",
-    title: "Clear CTA",
+    title: "End-to-End Partnership",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing. odio ea accusamus consectetur.",
+      "From strategy and architecture to deployment and support, we stay with you through the journey.",
   },
   {
     icon: "Newspaper",
-    title: "Clear Headline",
+    title: "Customer-Centric Collaboration",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam. Natus consectetur.",
+      "We work as an extension of your team, ensuring transparent communication, flexibility, and solutions aligned with your business goals.",
   },
 ];
 
 export const FeaturesSection = () => {
   return (
     <section id="features" className="container py-24 sm:py-32">
-      <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
+      {/* <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
         Features
-      </h2>
+      </h2> */}
 
       <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
-        What Makes Us Different
+        Why Choose AI Infotech
       </h2>
 
       <h3 className="md:w-1/2 mx-auto text-xl text-center text-muted-foreground mb-8">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
-        fugiat, odit similique quasi sint reiciendis quidem iure veritatis optio
-        facere tenetur.
+        Built for Speed, Scale, and Innovation
       </h3>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
