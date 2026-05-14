@@ -77,35 +77,6 @@ export const IndustriesSection = () => {
           </p>
         </div>
 
-        {/* <div className="grid lg:grid-cols-2 gap-4 w-full">
-          {industriesList.map(({ icon, title, description }, index) => (
-            <Card
-              key={title}
-              className="bg-muted/50 dark:bg-card hover:bg-background transition-all delay-75 group/number"
-            >
-              <CardHeader>
-                <div className="flex justify-between">
-                  <Icon
-                    name={icon as keyof typeof icons}
-                    size={32}
-                    color="hsl(var(--primary))"
-                    className="mb-6 text-primary"
-                  />
-                  <span className="text-5xl text-muted-foreground/15 font-medium transition-all delay-75 group-hover/number:text-muted-foreground/30">
-                    0{index + 1}
-                  </span>
-                </div>
-
-                <CardTitle>{title}</CardTitle>
-              </CardHeader>
-
-              <CardContent className="text-muted-foreground">
-                {description}
-              </CardContent>
-            </Card>
-          ))}
-        </div> */}
-
         <div className="grid lg:grid-cols-2 gap-4 w-full">
           {industriesList.map(({ icon, title, description }, index) => (
             <Card

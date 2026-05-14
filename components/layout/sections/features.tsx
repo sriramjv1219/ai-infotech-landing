@@ -29,19 +29,19 @@ const featureList: FeaturesProps[] = [
   },
   {
     icon: "TabletSmartphone",
-    title: "Business-Focused Engineering",
+    title: "Business Focused Engineering",
     description:
       "We align technology solutions with measurable business outcomes.",
   },
   {
     icon: "MousePointerClick",
-    title: "End-to-End Partnership",
+    title: "End to End Partnership",
     description:
       "From strategy and architecture to deployment and support, we stay with you through the journey.",
   },
   {
     icon: "Newspaper",
-    title: "Customer-Centric Collaboration",
+    title: "Customer Centric Collaboration",
     description:
       "We work as an extension of your team, ensuring transparent communication, flexibility, and solutions aligned with your business goals.",
   },
@@ -76,7 +76,7 @@ export const FeaturesSection = () => {
                   />
                 </div>
 
-                <CardTitle>{title}</CardTitle>
+                <CardTitle className="text-center">{title}</CardTitle>
               </CardHeader>
 
               <CardContent className="text-muted-foreground text-center">
