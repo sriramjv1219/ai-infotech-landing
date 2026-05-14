@@ -28,6 +28,7 @@ export default function Hero2() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     const [isInView, setIsInView] = useState(false);
+    const [startHeadlineAnimation, setStartHeadlineAnimation] = useState(false);
     const [showCta, setShowCta] = useState(false);
     const [showDescription, setShowDescription] = useState(false);
     const [shouldRenderVideo, setShouldRenderVideo] = useState(true);
@@ -68,19 +69,23 @@ export default function Hero2() {
     }, []);
 
     useEffect(() => {
+        if (!startHeadlineAnimation) {
+            return;
+        }
+
+        const ctaTimer = window.setTimeout(() => {
+            setShowCta(true);
+        }, 3000);
+
         const descriptionTimer = window.setTimeout(() => {
             setShowDescription(true);
         }, 3100);
 
-        const timer = window.setTimeout(() => {
-            setShowCta(true);
-        }, 3000);
-
         return () => {
+            window.clearTimeout(ctaTimer);
             window.clearTimeout(descriptionTimer);
-            window.clearTimeout(timer);
         };
-    }, []);
+    }, [startHeadlineAnimation]);
 
     useEffect(() => {
         const section = sectionRef.current;
@@ -88,17 +93,55 @@ export default function Hero2() {
             return;
         }
 
+        const calculateInView = () => {
+            const rect = section.getBoundingClientRect();
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            const intersectsViewport = rect.bottom > 0 && rect.top < viewportHeight;
+
+            setIsInView(intersectsViewport);
+        };
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsInView(entry.isIntersecting);
             },
-            { threshold: 0.25 }
+            { threshold: [0, 0.01, 0.1] }
         );
 
         observer.observe(section);
+        calculateInView();
+        // Hash navigation and scroll restoration can occur just after hydration.
+        window.requestAnimationFrame(calculateInView);
+        window.setTimeout(calculateInView, 0);
+
+        window.addEventListener("scroll", calculateInView, { passive: true });
+        window.addEventListener("resize", calculateInView);
+        window.addEventListener("hashchange", calculateInView);
+        document.addEventListener("visibilitychange", calculateInView);
 
         return () => {
             observer.disconnect();
+            window.removeEventListener("scroll", calculateInView);
+            window.removeEventListener("resize", calculateInView);
+            window.removeEventListener("hashchange", calculateInView);
+            document.removeEventListener("visibilitychange", calculateInView);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isInView) {
+            setStartHeadlineAnimation(true);
+        }
+    }, [isInView]);
+
+    useEffect(() => {
+        // Never allow hero content to remain hidden if visibility observers miss a transition.
+        const safetyTimer = window.setTimeout(() => {
+            setStartHeadlineAnimation(true);
+        }, 4500);
+
+        return () => {
+            window.clearTimeout(safetyTimer);
         };
     }, []);
 
@@ -165,8 +208,16 @@ export default function Hero2() {
                                 return (
                                     <span
                                         key={segment}
-                                        className="inline-block translate-y-5 animate-[heroWord_0.5s_cubic-bezier(0.22,1,0.36,1)_forwards] opacity-0"
-                                        style={{ animationDelay: `${1 + index * 0.5}s` }}
+                                        className={`inline-block ${
+                                            startHeadlineAnimation
+                                                ? "translate-y-5 animate-[heroWord_0.5s_cubic-bezier(0.22,1,0.36,1)_forwards] opacity-0"
+                                                : "opacity-0"
+                                        }`}
+                                        style={
+                                            startHeadlineAnimation
+                                                ? { animationDelay: `${1 + index * 0.5}s` }
+                                                : undefined
+                                        }
                                     >
                                         {isHighlight ? (
                                             <span className="text-transparent px-2 bg-gradient-to-r from-[#D247BF] to-primary bg-clip-text">
