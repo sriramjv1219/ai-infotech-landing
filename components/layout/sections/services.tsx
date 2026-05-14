@@ -17,25 +17,25 @@ interface ServiceProps {
 }
 const serviceList: ServiceProps[] = [
   {
-    title: "Custom Domain Integration",
+    title: "Product Development",
     description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit adipisicing.",
+      "Design and build modern digital products with scalable architecture and exceptional user experience.",
     pro: 0,
   },
   {
-    title: "Social Media Integrations",
+    title: "Consulting",
     description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae, dicta.",
+      "Delivering strategic technology consulting to accelerate innovation, efficiency, and digital transformation initiatives.",
     pro: 0,
   },
   {
-    title: "Email Marketing Integrations",
-    description: "Lorem dolor sit amet adipisicing.",
+    title: "Offshore Onsite development and delivery",
+    description: "Providing flexible offshore and onsite development solutions to meet your business needs.",
     pro: 0,
   },
   {
-    title: "SEO Optimization",
-    description: "Lorem ipsum dolor sit amet consectetur.",
+    title: "Support and Maintenance",
+    description: "Ensure reliable performance, continuous improvements, and proactive support for your business-critical applications.",
     pro: 1,
   },
 ];
@@ -48,11 +48,10 @@ export const ServicesSection = () => {
       </h2>
 
       <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
-        Grow Your Business
+        Technology Services Built Around Business Outcomes
       </h2>
       <h3 className="md:w-1/2 mx-auto text-xl text-center text-muted-foreground mb-8">
-        From marketing and sales to operations and strategy, we have the
-        expertise to help you achieve your goals.
+       From consulting and product engineering to dedicated delivery and long-term support, AI Infotech provides end-to-end technology services that help businesses innovate faster, operate efficiently, and build scalable digital solutions.
       </h3>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
@@ -66,13 +65,13 @@ export const ServicesSection = () => {
               <CardTitle>{title}</CardTitle>
               <CardDescription>{description}</CardDescription>
             </CardHeader>
-            <Badge
+            {/* <Badge
               data-pro={ProService.YES === pro}
               variant="secondary"
               className="absolute -top-2 -right-3 data-[pro=false]:hidden"
             >
               PRO
-            </Badge>
+            </Badge> */}
           </Card>
         ))}
       </div>
